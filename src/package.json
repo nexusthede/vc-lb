@@ -1,10 +1,10 @@
 {
-  "name": "leaderboard-bot",
+  "name": "custom-bot",
   "version": "1.0.0",
-  "description": "Discord leaderboard bot with chat and voice tracking",
+  "description": "Discord-bot",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "dependencies": {
     "discord.js": "^14.19.3",
