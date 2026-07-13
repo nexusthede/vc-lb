@@ -7,6 +7,10 @@ const activeVoiceUsers = new Map();
 
 function addUser(member){
 
+    if(member.user.bot)
+        return;
+
+
     activeVoiceUsers.set(
 
         `${member.guild.id}-${member.id}`,
@@ -58,7 +62,9 @@ async function updateVoiceTime(){
                 update:{
 
                     $inc:{
+
                         voiceTime:60
+
                     }
 
                 },
@@ -77,9 +83,11 @@ async function updateVoiceTime(){
 
     if(updates.length){
 
+
         await User.bulkWrite(
             updates
         );
+
 
     }
 
@@ -91,8 +99,11 @@ async function updateVoiceTime(){
 module.exports = {
 
     activeVoiceUsers,
+
     addUser,
+
     removeUser,
+
     updateVoiceTime
 
 };
