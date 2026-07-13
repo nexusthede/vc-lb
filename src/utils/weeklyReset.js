@@ -34,7 +34,7 @@ async function resetLeaderboards(){
 
                 $set:{
 
-                    lastReset:Date.now()
+                    lastReset:new Date()
 
                 }
 
@@ -66,6 +66,10 @@ async function resetLeaderboards(){
 function startWeeklyReset(){
 
 
+    let lastRun = null;
+
+
+
     setInterval(async()=>{
 
 
@@ -73,8 +77,6 @@ function startWeeklyReset(){
         new Date();
 
 
-
-        // Sunday 12:00 AM
 
         if(
 
@@ -87,7 +89,21 @@ function startWeeklyReset(){
         ){
 
 
-            await resetLeaderboards();
+            const today =
+            now.toDateString();
+
+
+
+            if(lastRun !== today){
+
+
+                lastRun = today;
+
+
+                await resetLeaderboards();
+
+
+            }
 
 
         }
