@@ -1,8 +1,15 @@
 const {
     Client,
     GatewayIntentBits,
-    Collection
+    Collection,
+    DefaultWebSocketManagerOptions
 } = require("discord.js");
+
+
+// Mobile status
+DefaultWebSocketManagerOptions.identifyProperties.browser =
+"Discord Android";
+
 
 const mongoose = require("mongoose");
 const fs = require("fs");
