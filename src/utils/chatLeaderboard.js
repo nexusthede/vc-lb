@@ -50,7 +50,7 @@ async function updateChatLeaderboard(data, client){
 
     let text =
 `**Chat Leaderboard**
-Combined Messages: ${total.toLocaleString()}
+Combined Messages: **[${total.toLocaleString()} messages](https://example.com)**
 
 `;
 
@@ -60,15 +60,32 @@ Combined Messages: ${total.toLocaleString()}
 
 
         text +=
-        `> \`${String(index + 1).padStart(2,"0")}\` <@${user.userId}> • ${user.messages.toLocaleString()} messages\n`;
+        `> \`${String(index + 1).padStart(2,"0")}\` <@${user.userId}> • **[${user.messages.toLocaleString()} messages](https://example.com)**\n`;
 
 
     });
 
 
 
+    const nextReset =
+    new Date(data.lastReset);
+
+
+    nextReset.setDate(
+        nextReset.getDate() + 7
+    );
+
+
+    const daysLeft =
+    Math.ceil(
+        (nextReset - new Date()) /
+        (1000 * 60 * 60 * 24)
+    );
+
+
+
     text +=
-`\n-# Reset in 7 Days`;
+`\n-# Reset in ${daysLeft} Days`;
 
 
 
