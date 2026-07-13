@@ -76,7 +76,7 @@ module.exports = {
         message.content
         .slice(config.prefix.length)
         .trim()
-        .split(/ +);
+        .split(/ +/);
 
 
 
