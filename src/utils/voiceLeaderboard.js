@@ -6,6 +6,7 @@ const User = require("../models/User");
 const config = require("../config");
 
 
+
 function formatTime(seconds){
 
 
@@ -69,7 +70,7 @@ async function updateVoiceLeaderboard(data, client){
 
     let text =
 `**Voice Leaderboard**
-Combined Hours: ${formatTime(total)}
+Combined Hours: **[${formatTime(total)}](https://example.com)**
 
 `;
 
@@ -79,7 +80,7 @@ Combined Hours: ${formatTime(total)}
 
 
         text +=
-        `> \`${String(index + 1).padStart(2,"0")}\` <@${user.userId}> • ${formatTime(user.voiceTime)}\n`;
+        `> \`${String(index + 1).padStart(2,"0")}\` <@${user.userId}> • **[${formatTime(user.voiceTime)}](https://example.com)**\n`;
 
 
     });
