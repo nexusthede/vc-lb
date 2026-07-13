@@ -1,0 +1,17 @@
+{
+  "name": "leaderboard-bot",
+  "version": "1.0.0",
+  "description": "Discord leaderboard bot with chat and voice tracking",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.19.3",
+    "mongoose": "^8.13.2",
+    "express": "^5.1.0"
+  },
+  "engines": {
+    "node": "24.x"
+  }
+}
