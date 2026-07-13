@@ -4,12 +4,9 @@ const {
 } = require("../utils/voiceTracker");
 
 
-
 module.exports = {
 
-
     name:"voiceStateUpdate",
-
 
 
     async execute(
@@ -29,7 +26,6 @@ module.exports = {
             member.user.bot
         )
             return;
-
 
 
 
@@ -57,6 +53,21 @@ module.exports = {
 
         }
 
+
+
+        // Switch VC
+
+        if(
+            oldState.channel &&
+            newState.channel &&
+            oldState.channel.id !== newState.channel.id
+        ){
+
+            removeUser(member);
+
+            addUser(member);
+
+        }
 
 
     }
