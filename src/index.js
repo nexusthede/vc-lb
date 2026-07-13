@@ -14,11 +14,32 @@ DefaultWebSocketManagerOptions.identifyProperties.browser =
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
+const express = require("express");
 
 const config = require("./config");
 
 
 const ALLOWED_GUILD_ID = "1406596836793516102";
+
+
+// Render / Better Stack uptime
+
+const app = express();
+
+app.get("/", (req, res) => {
+
+    res.send("Bot is online");
+
+});
+
+app.listen(process.env.PORT || 3000, () => {
+
+    console.log(
+        "Web server started"
+    );
+
+});
+
 
 
 const client = new Client({
