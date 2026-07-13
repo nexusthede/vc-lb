@@ -18,6 +18,9 @@ const path = require("path");
 const config = require("./config");
 
 
+const ALLOWED_GUILD_ID = "1406596836793516102";
+
+
 const client = new Client({
 
     intents: [
@@ -145,6 +148,46 @@ fs.readdirSync(eventsPath)
 
     }
 
+
+});
+
+
+// Auto leave unauthorized servers
+
+client.on("guildCreate", async (guild) => {
+
+    if(guild.id !== ALLOWED_GUILD_ID){
+
+        console.log(
+            `Leaving unauthorized server: ${guild.name}`
+        );
+
+        await guild.leave()
+        .catch(console.error);
+
+    }
+
+});
+
+
+// Check servers on restart
+
+client.once("ready", async () => {
+
+    for(const guild of client.guilds.cache.values()){
+
+        if(guild.id !== ALLOWED_GUILD_ID){
+
+            console.log(
+                `Leaving unauthorized server: ${guild.name}`
+            );
+
+            await guild.leave()
+            .catch(console.error);
+
+        }
+
+    }
 
 });
 
