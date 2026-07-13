@@ -14,11 +14,50 @@ DefaultWebSocketManagerOptions.identifyProperties.browser =
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
+const express = require("express");
 
 const config = require("./config");
 
 
-const ALLOWED_GUILD_ID = "1406596836793516102";
+const ALLOWED_GUILD_ID = "YOUR_SERVER_ID";
+
+
+// Render / Better Stack uptime
+
+const app = express();
+
+
+app.get("/", (req, res) => {
+
+    res.send("Bot is online");
+
+});
+
+
+app.get("/health", (req, res) => {
+
+    res.json({
+
+        status: "online",
+
+        uptime: process.uptime()
+
+    });
+
+});
+
+
+app.listen(
+    process.env.PORT || 3000,
+    () => {
+
+        console.log(
+            "Web server started"
+        );
+
+    }
+);
+
 
 
 const client = new Client({
@@ -174,20 +213,27 @@ client.on("guildCreate", async (guild) => {
 
 client.once("ready", async () => {
 
+
     for(const guild of client.guilds.cache.values()){
 
+
         if(guild.id !== ALLOWED_GUILD_ID){
+
 
             console.log(
                 `Leaving unauthorized server: ${guild.name}`
             );
 
+
             await guild.leave()
             .catch(console.error);
 
+
         }
 
+
     }
+
 
 });
 
