@@ -1,5 +1,7 @@
 const {
-    updateVoiceTime
+    updateVoiceTime,
+    addUser,
+    activeVoiceUsers
 } = require("../utils/voiceTracker");
 
 
@@ -32,6 +34,44 @@ module.exports = {
         console.log(
             `${client.user.tag} online`
         );
+
+
+
+        // Restore VC users after restart
+
+        for(const guild of client.guilds.cache.values()){
+
+
+            for(const channel of guild.channels.cache.values()){
+
+
+                if(channel.isVoiceBased()){
+
+
+                    for(const member of channel.members.values()){
+
+
+                        if(!member.user.bot){
+
+
+                            addUser(member);
+
+
+                        }
+
+
+                    }
+
+
+                }
+
+
+            }
+
+
+        }
+
+
 
 
 
