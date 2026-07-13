@@ -8,6 +8,11 @@ const {
 } = require("../utils/leaderboardUpdater");
 
 
+const {
+    startWeeklyReset
+} = require("../utils/weeklyReset");
+
+
 const config = require("../config");
 
 
@@ -21,9 +26,7 @@ module.exports = {
     once:true,
 
 
-
     async execute(client){
-
 
 
         console.log(
@@ -32,7 +35,7 @@ module.exports = {
 
 
 
-        // VC time tracker
+        // Track VC every minute
 
         setInterval(async()=>{
 
@@ -41,10 +44,11 @@ module.exports = {
 
                 await updateVoiceTime();
 
-            }catch(err){
+            }
+
+            catch(err){
 
                 console.error(
-                    "VC Tracker:",
                     err
                 );
 
@@ -57,7 +61,7 @@ module.exports = {
 
 
 
-        // Leaderboard updater
+        // Update leaderboard embeds
 
         setInterval(async()=>{
 
@@ -66,10 +70,11 @@ module.exports = {
 
                 await updateAll(client);
 
-            }catch(err){
+            }
+
+            catch(err){
 
                 console.error(
-                    "Leaderboard:",
                     err
                 );
 
@@ -77,6 +82,14 @@ module.exports = {
 
 
         },config.leaderboardUpdateInterval);
+
+
+
+
+
+        // Weekly reset
+
+        startWeeklyReset();
 
 
 
