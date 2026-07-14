@@ -1,4 +1,4 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 const config = require("../../config");
 const VoiceChannel = require("../../models/VoiceChannel");
 
@@ -73,7 +73,9 @@ module.exports = {
 
         if(
             !everyone ||
-            !everyone.deny.has("Connect")
+            !everyone.deny.has(
+                PermissionFlagsBits.Connect
+            )
         )
 
             return message.channel.send({
@@ -114,7 +116,7 @@ module.exports = {
 
 
 
-        message.channel.send({
+        return message.channel.send({
 
             embeds:[
 
