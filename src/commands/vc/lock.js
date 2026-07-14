@@ -76,8 +76,7 @@ module.exports = {
 
 
         if(
-            overwrite &&
-            overwrite.deny.has(
+            overwrite?.deny.has(
                 PermissionFlagsBits.Connect
             )
         ){
@@ -117,7 +116,13 @@ module.exports = {
         if(config.voiceCategories?.private){
 
             await channel.setParent(
-                config.voiceCategories.private
+
+                config.voiceCategories.private,
+
+                {
+                    lockPermissions:false
+                }
+
             );
 
         }
