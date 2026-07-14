@@ -60,16 +60,16 @@ module.exports = {
 `Use the controls below to manage your voice channel.
 
 **Commands**
-> <:vc_lock:1526495431150800996> \`Lock\` - Lock your room
-> <:vc_unlock:1526495168130318348> \`Unlock\` - Unlock your room
-> <:vc_hide:1526495330269663362> \`Hide\` - Hide your room
-> <:vc_reveal:1526495525195485305> \`Reveal\` - Reveal your room
-> <:vc_rename:1526564429339299944> \`Rename\` - Change your room name
-> <:vc_limit:1526573445326966866> \`Limit\` - Set your room user limit
-> <:vc_permit:1526564717965869076> \`Permit\` - Allow a user to join
-> <:vc_reject:1526568150210973706> \`Reject\` - Block a user from joining
-> <:vc_transfer:1526564886010658917> \`Transfer\` - Transfer room ownership
-> <:vc_claim:1526564667055542453> \`Claim\` - Claim ownership of an abandoned room`
+> <:vc_lock:1526495431150800996> [\`Lock\`](https://example.com/) - Lock your room
+> <:vc_unlock:1526495168130318348> [\`Unlock\`](https://example.com/) - Unlock your room
+> <:vc_hide:1526495330269663362> [\`Hide\`](https://example.com/) - Hide your room
+> <:vc_reveal:1526495525195485305> [\`Reveal\`](https://example.com/) - Reveal your room
+> <:vc_rename:1526564429339299944> [\`Rename\`](https://example.com/) - Change your room name
+> <:vc_limit:1526573445326966866> [\`Limit\`](https://example.com/) - Set your room user limit
+> <:vc_permit:1526564717965869076> [\`Permit\`](https://example.com/) - Allow a user to join
+> <:vc_reject:1526568150210973706> [\`Reject\`](https://example.com/) - Block a user from joining
+> <:vc_transfer:1526564886010658917> [\`Transfer\`](https://example.com/) - Transfer room ownership
+> <:vc_claim:1526564667055542453> [\`Claim\`](https://example.com/) - Claim ownership of an abandoned room`
         );
 
 
@@ -152,7 +152,6 @@ module.exports = {
             ]
 
         });
-
 
     }
 
