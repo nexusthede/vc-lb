@@ -19,7 +19,12 @@ const express = require("express");
 const config = require("./config");
 
 
-const ALLOWED_GUILD_ID = "1406596836793516102";
+// Allowed servers
+
+const ALLOWED_GUILD_IDS = [
+    "1406596836793516102",
+    "1526168767988764722"
+];
 
 
 // Render / Better Stack uptime
@@ -165,6 +170,7 @@ fs.readdirSync(eventsPath)
                 ...args,
                 client
             )
+
         );
 
     }
@@ -173,15 +179,17 @@ fs.readdirSync(eventsPath)
 });
 
 
+
 // Auto leave unauthorized servers
 
 client.on("guildCreate", async (guild) => {
 
-    if(guild.id !== ALLOWED_GUILD_ID){
+    if(!ALLOWED_GUILD_IDS.includes(guild.id)){
 
         console.log(
             `Leaving unauthorized server: ${guild.name}`
         );
+
 
         await guild.leave()
         .catch(console.error);
@@ -191,17 +199,19 @@ client.on("guildCreate", async (guild) => {
 });
 
 
+
 // Check servers on restart
 
 client.once("ready", async () => {
 
     for(const guild of client.guilds.cache.values()){
 
-        if(guild.id !== ALLOWED_GUILD_ID){
+        if(!ALLOWED_GUILD_IDS.includes(guild.id)){
 
             console.log(
                 `Leaving unauthorized server: ${guild.name}`
             );
+
 
             await guild.leave()
             .catch(console.error);
@@ -215,6 +225,7 @@ client.once("ready", async () => {
 
 
 mongoose.connect(config.mongoURI)
+
 .then(()=>{
 
     console.log(
@@ -222,6 +233,7 @@ mongoose.connect(config.mongoURI)
     );
 
 })
+
 .catch(console.error);
 
 
