@@ -1,5 +1,6 @@
 const {
-    ChannelType
+    ChannelType,
+    PermissionFlagsBits
 } = require("discord.js");
 
 const config = require("../config");
@@ -17,8 +18,43 @@ async function createVoice(member){
 
         type:ChannelType.GuildVoice,
 
-        parent:
-        config.voiceCategories.public
+        parent:config.voiceCategories.public,
+
+
+        permissionOverwrites:[
+
+            {
+
+                id:member.guild.roles.everyone.id,
+
+                allow:[
+
+                    PermissionFlagsBits.Connect
+
+                ]
+
+            },
+
+
+            {
+
+                id:member.id,
+
+                allow:[
+
+                    PermissionFlagsBits.Connect,
+
+                    PermissionFlagsBits.ViewChannel,
+
+                    PermissionFlagsBits.ManageChannels,
+
+                    PermissionFlagsBits.MoveMembers
+
+                ]
+
+            }
+
+        ]
 
     });
 
