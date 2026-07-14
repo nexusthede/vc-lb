@@ -10,6 +10,10 @@ const {
     getPreviousChannel
 } = require("../utils/unmuteTracker");
 
+const {
+    handleRandomVoice
+} = require("../utils/randomVoice");
+
 
 module.exports = {
 
@@ -98,6 +102,21 @@ module.exports = {
 
             }
 
+
+        }
+
+
+
+        // Random VC
+
+        if(
+            newState.channelId ===
+            config.voiceChannels.random
+        ){
+
+            await handleRandomVoice(
+                member
+            );
 
         }
 
