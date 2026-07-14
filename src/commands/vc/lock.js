@@ -1,13 +1,13 @@
-const { EmbedBuilder } = require("discord.js");
+const { EmbedBuilder, PermissionFlagsBits } = require("discord.js");
 const config = require("../../config");
 const VoiceChannel = require("../../models/VoiceChannel");
 
 
 module.exports = {
 
-    name:"lock",
+    name: "lock",
 
-    async execute(client,message,args){
+    async execute(client, message, args) {
 
 
         const channel =
@@ -15,7 +15,7 @@ module.exports = {
 
 
 
-        if(!channel)
+        if(!channel){
 
             return message.channel.send({
 
@@ -33,18 +33,20 @@ module.exports = {
 
             });
 
+        }
+
 
 
         const data =
         await VoiceChannel.findOne({
 
-            channelId:channel.id
+            channelId: channel.id
 
         });
 
 
 
-        if(!data || data.ownerId !== message.author.id)
+        if(!data || data.ownerId !== message.author.id){
 
             return message.channel.send({
 
@@ -62,9 +64,11 @@ module.exports = {
 
             });
 
+        }
 
 
-        const everyone =
+
+        const overwrite =
         channel.permissionOverwrites.cache.get(
             message.guild.roles.everyone.id
         );
@@ -72,9 +76,11 @@ module.exports = {
 
 
         if(
-            everyone &&
-            everyone.deny.has("Connect")
-        )
+            overwrite &&
+            overwrite.deny.has(
+                PermissionFlagsBits.Connect
+            )
+        ){
 
             return message.channel.send({
 
@@ -92,6 +98,8 @@ module.exports = {
 
             });
 
+        }
+
 
 
         await channel.permissionOverwrites.edit(
@@ -99,22 +107,24 @@ module.exports = {
             message.guild.roles.everyone,
 
             {
-                Connect:false
+                Connect: false
             }
 
         );
 
 
 
-        if(config.voiceCategories?.private)
+        if(config.voiceCategories?.private){
 
             await channel.setParent(
                 config.voiceCategories.private
             );
 
+        }
 
 
-        message.channel.send({
+
+        return message.channel.send({
 
             embeds:[
 
