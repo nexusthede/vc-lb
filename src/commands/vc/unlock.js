@@ -5,16 +5,17 @@ const VoiceChannel = require("../../models/VoiceChannel");
 
 module.exports = {
 
-    name: "unlock",
+    name:"unlock",
 
-    async execute(client, message, args) {
+    async execute(client,message,args){
 
 
         const channel =
         message.member.voice.channel;
 
 
-        if(!channel){
+
+        if(!channel)
 
             return message.channel.send({
 
@@ -32,20 +33,18 @@ module.exports = {
 
             });
 
-        }
-
 
 
         const data =
         await VoiceChannel.findOne({
 
-            channelId: channel.id
+            channelId:channel.id
 
         });
 
 
 
-        if(!data || data.ownerId !== message.author.id){
+        if(!data || data.ownerId !== message.author.id)
 
             return message.channel.send({
 
@@ -63,7 +62,35 @@ module.exports = {
 
             });
 
-        }
+
+
+        const everyone =
+        channel.permissionOverwrites.cache.get(
+            message.guild.roles.everyone.id
+        );
+
+
+
+        if(
+            !everyone ||
+            !everyone.deny.has("Connect")
+        )
+
+            return message.channel.send({
+
+                embeds:[
+
+                    new EmbedBuilder()
+
+                    .setColor(config.errorColor)
+
+                    .setDescription(
+                        `<:x_failed:1526498753798738010> **${channel.name}** is already unlocked.`
+                    )
+
+                ]
+
+            });
 
 
 
@@ -79,28 +106,27 @@ module.exports = {
 
 
 
-        if(config.voiceCategories?.public){
+        if(config.voiceCategories?.public)
 
             await channel.setParent(
                 config.voiceCategories.public
             );
 
-        }
-
-
-
-        const embed = new EmbedBuilder()
-
-        .setColor(config.successColor)
-
-        .setDescription(
-            `<:vc_unlock:1526495168130318348> **${channel.name}** has been unlocked.`
-        );
 
 
         message.channel.send({
 
-            embeds:[embed]
+            embeds:[
+
+                new EmbedBuilder()
+
+                .setColor(config.successColor)
+
+                .setDescription(
+                    `<:vc_unlock:1526495168130318348> **${channel.name}** has been unlocked.`
+                )
+
+            ]
 
         });
 
