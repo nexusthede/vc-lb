@@ -65,9 +65,9 @@ module.exports = {
 
 
         const everyone =
-        channel.permissionOverwrites.cache.get(
+        await channel.permissionOverwrites.fetch(
             message.guild.roles.everyone.id
-        );
+        ).catch(() => null);
 
 
 
