@@ -13,7 +13,7 @@ async function createVoice(member){
     const channel =
     await member.guild.channels.create({
 
-        name:`${member.displayName}'s Room`,
+        name:`${member.displayName}'s room`,
 
         type:ChannelType.GuildVoice,
 
