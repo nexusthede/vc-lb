@@ -1,14 +1,8 @@
 const {
     Client,
     GatewayIntentBits,
-    Collection,
-    DefaultWebSocketManagerOptions
+    Collection
 } = require("discord.js");
-
-
-// Mobile status
-DefaultWebSocketManagerOptions.identifyProperties.browser =
-"Discord Android";
 
 
 const mongoose = require("mongoose");
@@ -40,11 +34,10 @@ app.get("/", (req, res) => {
 
 app.listen(process.env.PORT || 3000, () => {
 
-    console.log(
-        "Web server started"
-    );
+    console.log("Web server started");
 
 });
+
 
 
 // Discord Client
@@ -64,17 +57,56 @@ const client = new Client({
 });
 
 
-// Error logging
+
+// Debug events
 
 client.on("error", console.error);
 
+client.on("warn", console.warn);
+
 client.on("shardError", console.error);
 
-client.on("warn", console.warn);
+client.on("invalidated", () => {
+
+    console.log("Discord session invalidated");
+
+});
+
+
+client.on("shardDisconnect", (event, shardId) => {
+
+    console.log(
+        "Shard disconnected:",
+        shardId,
+        event
+    );
+
+});
+
+
+client.on("shardReconnecting", (shardId) => {
+
+    console.log(
+        "Shard reconnecting:",
+        shardId
+    );
+
+});
+
+
+client.on("ready", () => {
+
+    console.log(
+        `${client.user.tag} online`
+    );
+
+});
+
 
 process.on("unhandledRejection", console.error);
 
 process.on("uncaughtException", console.error);
+
 
 
 
@@ -89,8 +121,7 @@ function loadCommands(dir){
 
     for(const file of files){
 
-        const location =
-        path.join(dir,file);
+        const location = path.join(dir, file);
 
 
         if(fs.statSync(location).isDirectory()){
@@ -105,15 +136,11 @@ function loadCommands(dir){
             continue;
 
 
-
-        const command =
-        require(location);
-
+        const command = require(location);
 
 
         if(!command.name)
             continue;
-
 
 
         client.commands.set(
@@ -124,7 +151,7 @@ function loadCommands(dir){
 
         if(command.aliases){
 
-            command.aliases.forEach(alias=>{
+            command.aliases.forEach(alias => {
 
                 client.commands.set(
                     alias,
@@ -142,26 +169,22 @@ function loadCommands(dir){
 
 
 loadCommands(
-    path.join(__dirname,"commands")
+    path.join(__dirname, "commands")
 );
 
 
 
-const eventsPath =
-path.join(__dirname,"events");
 
+
+const eventsPath = path.join(__dirname, "events");
 
 
 fs.readdirSync(eventsPath)
-.forEach(file=>{
+.forEach(file => {
 
 
-    const event =
-    require(
-        path.join(
-            eventsPath,
-            file
-        )
+    const event = require(
+        path.join(eventsPath, file)
     );
 
 
@@ -169,30 +192,30 @@ fs.readdirSync(eventsPath)
 
         client.once(
             event.name,
-            (...args)=>
-            event.execute(
-                ...args,
-                client
-            )
+            (...args) =>
+                event.execute(
+                    ...args,
+                    client
+                )
         );
 
     } else {
 
-
         client.on(
             event.name,
-            (...args)=>
-            event.execute(
-                ...args,
-                client
-            )
-
+            (...args) =>
+                event.execute(
+                    ...args,
+                    client
+                )
         );
 
     }
 
 
 });
+
+
 
 
 
@@ -216,13 +239,18 @@ client.on("guildCreate", async (guild) => {
 
 
 
+
+
 // Check servers on restart
 
 client.once("ready", async () => {
 
+
     for(const guild of client.guilds.cache.values()){
 
+
         if(!ALLOWED_GUILD_IDS.includes(guild.id)){
+
 
             console.log(
                 `Leaving unauthorized server: ${guild.name}`
@@ -232,11 +260,16 @@ client.once("ready", async () => {
             await guild.leave()
             .catch(console.error);
 
+
         }
+
 
     }
 
+
 });
+
+
 
 
 
@@ -244,7 +277,7 @@ client.once("ready", async () => {
 
 mongoose.connect(config.mongoURI)
 
-.then(()=>{
+.then(() => {
 
     console.log(
         "MongoDB Connected"
@@ -256,6 +289,8 @@ mongoose.connect(config.mongoURI)
 
 
 
+
+
 // Discord Login
 
 console.log(
@@ -264,9 +299,10 @@ console.log(
 );
 
 
+
 client.login(config.token)
 
-.then(()=>{
+.then(() => {
 
     console.log(
         "Discord login successful"
@@ -274,7 +310,7 @@ client.login(config.token)
 
 })
 
-.catch(err=>{
+.catch(err => {
 
     console.error(
         "Discord login failed:",
