@@ -37,6 +37,7 @@ app.get("/", (req, res) => {
 
 });
 
+
 app.listen(process.env.PORT || 3000, () => {
 
     console.log(
@@ -46,6 +47,7 @@ app.listen(process.env.PORT || 3000, () => {
 });
 
 
+// Discord Client
 
 const client = new Client({
 
@@ -60,6 +62,20 @@ const client = new Client({
     ]
 
 });
+
+
+// Error logging
+
+client.on("error", console.error);
+
+client.on("shardError", console.error);
+
+client.on("warn", console.warn);
+
+process.on("unhandledRejection", console.error);
+
+process.on("uncaughtException", console.error);
+
 
 
 client.commands = new Collection();
@@ -224,6 +240,8 @@ client.once("ready", async () => {
 
 
 
+// MongoDB
+
 mongoose.connect(config.mongoURI)
 
 .then(()=>{
@@ -238,4 +256,29 @@ mongoose.connect(config.mongoURI)
 
 
 
-client.login(config.token);
+// Discord Login
+
+console.log(
+    "Token:",
+    config.token ? "FOUND" : "MISSING"
+);
+
+
+client.login(config.token)
+
+.then(()=>{
+
+    console.log(
+        "Discord login successful"
+    );
+
+})
+
+.catch(err=>{
+
+    console.error(
+        "Discord login failed:",
+        err
+    );
+
+});
