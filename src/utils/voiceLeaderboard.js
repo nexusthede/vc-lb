@@ -88,7 +88,7 @@ Combined Hours: **[${formatTime(total)}](https://example.com)**
 
 
     text +=
-`\n-# Reset in 7 Days`;
+`\n-# Reset in ${daysLeft} Days`;
 
 
 
